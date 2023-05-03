@@ -9,13 +9,11 @@ namespace AirsoftClub.Infrastructure.Data.Configuration
     {
         public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContextFactory<AirsoftClubDbContext>(o =>
+            services.AddDbContext<AirsoftClubDbContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
-                o.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString);
             });
-
-            services.AddSingleton<IDbContextFactory, DbContextFactory>();
 
             return services;
         }
