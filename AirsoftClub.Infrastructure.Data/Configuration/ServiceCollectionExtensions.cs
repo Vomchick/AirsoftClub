@@ -1,4 +1,6 @@
 ﻿using AirsoftClub.Domain.Interfaces;
+using AirsoftClub.Domain.Interfaces.RepositoryChilds;
+using AirsoftClub.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ namespace AirsoftClub.Infrastructure.Data.Configuration
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
