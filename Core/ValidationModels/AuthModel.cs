@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AirsoftClub.Domain.Core.ValidationModels
 {
-    public class Login
+    public class AuthModel
     {
         [Required]
         [MaxLength(128)]

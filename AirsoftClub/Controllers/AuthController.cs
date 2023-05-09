@@ -29,7 +29,7 @@ namespace AirsoftClub.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] Login request)
+        public async Task<IActionResult> Login([FromBody] AuthModel request)
         {
             try
             {
@@ -47,6 +47,39 @@ namespace AirsoftClub.Controllers
             {
                 logger.LogError(ex.Message);
                 return Unauthorized();
+            }
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] AuthModel value)
+        {
+            try
+            {
+                var user = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Name = value.UserName,
+                    Password = value.Password
+                };
+                var found = await userRepository.UsernameCheck(user.Name);
+                if (found != null)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    await userRepository.PostAsync(user);
+
+                    var token = GenerateJWT(user);
+
+                    return Ok(new { access_token = token });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
             }
         }
 

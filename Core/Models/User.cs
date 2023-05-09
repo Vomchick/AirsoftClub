@@ -21,7 +21,7 @@ namespace AirsoftClub.Domain.Core.Models
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Name).IsRequired().HasMaxLength(128);
-            builder.Property(x => x.Password).IsRequired().HasMaxLength(8);
+            builder.Property(x => x.Password).IsRequired();
 
             builder.HasOne(x => x.Player).WithOne(x => x.User).HasForeignKey<Player>(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         }

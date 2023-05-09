@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirsoftClub.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AirsoftClubDbContext))]
-    [Migration("20230417105659_init")]
+    [Migration("20230509160113_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -517,8 +517,7 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -529,31 +528,31 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("e4001e95-3efb-4e74-add8-9b70ec190b5a"),
                             Name = "User1",
-                            Password = "11111111"
+                            Password = "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1"
                         },
                         new
                         {
                             Id = new Guid("6f8e30bc-5cbd-4116-9587-e1620df6647f"),
                             Name = "User2",
-                            Password = "11111111"
+                            Password = "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1"
                         },
                         new
                         {
                             Id = new Guid("a16ca84c-196a-412d-b2f7-99eadcd5ef54"),
                             Name = "User3",
-                            Password = "11111111"
+                            Password = "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1"
                         },
                         new
                         {
                             Id = new Guid("c10b956d-2cf4-4f55-8773-695e94fdcb07"),
                             Name = "User4",
-                            Password = "11111111"
+                            Password = "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1"
                         },
                         new
                         {
                             Id = new Guid("960cb14e-d653-46ed-96ba-c75cd8703f4a"),
                             Name = "User5",
-                            Password = "11111111"
+                            Password = "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1"
                         });
                 });
 

@@ -1,5 +1,6 @@
 ﻿using AirsoftClub.Domain.Core.Models;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
+using AirsoftClub.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirsoftClub.Infrastructure.Data.Repositories
@@ -53,7 +54,12 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
         }
         public async Task<User> Authenticate(string username, string password)
         {
-            return await context.Users.SingleOrDefaultAsync(x => x.Name == username && x.Password == password).ConfigureAwait(false);
+            return await context.Users
+                .SingleOrDefaultAsync(x => x.Name == username && x.Password == HashPasswordHelper.HashPassword(password)).ConfigureAwait(false);
+        }
+        public async Task<User> UsernameCheck(string username)
+        {
+            return await context.Users.FirstOrDefaultAsync(x => x.Name == username).ConfigureAwait(false);
         }
     }
 }

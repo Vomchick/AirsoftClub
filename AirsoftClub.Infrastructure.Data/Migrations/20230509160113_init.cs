@@ -45,7 +45,7 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,11 +292,11 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "Name", "Password" },
                 values: new object[,]
                 {
-                    { new Guid("6f8e30bc-5cbd-4116-9587-e1620df6647f"), "User2", "11111111" },
-                    { new Guid("960cb14e-d653-46ed-96ba-c75cd8703f4a"), "User5", "11111111" },
-                    { new Guid("a16ca84c-196a-412d-b2f7-99eadcd5ef54"), "User3", "11111111" },
-                    { new Guid("c10b956d-2cf4-4f55-8773-695e94fdcb07"), "User4", "11111111" },
-                    { new Guid("e4001e95-3efb-4e74-add8-9b70ec190b5a"), "User1", "11111111" }
+                    { new Guid("6f8e30bc-5cbd-4116-9587-e1620df6647f"), "User2", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1" },
+                    { new Guid("960cb14e-d653-46ed-96ba-c75cd8703f4a"), "User5", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1" },
+                    { new Guid("a16ca84c-196a-412d-b2f7-99eadcd5ef54"), "User3", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1" },
+                    { new Guid("c10b956d-2cf4-4f55-8773-695e94fdcb07"), "User4", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1" },
+                    { new Guid("e4001e95-3efb-4e74-add8-9b70ec190b5a"), "User1", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1" }
                 });
 
             migrationBuilder.InsertData(

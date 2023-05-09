@@ -1,66 +1,89 @@
 using AirsoftClub.Infrastructure.Data;
 using AirsoftClub.Infrastructure.Data.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using NLog;
+using NLog.Web;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+    // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-//Registration of DbContext and Interfaces from Infrastructure.Data
-builder.Services.RegisterInfrastructure(builder.Configuration);
+    builder.Services.AddHttpContextAccessor();
 
-//Conguguration setup (for JWT Auth)
-builder.Services.Configure<AuthOptions>(builder.Configuration.GetSection("Auth"));
+    //Registration of DbContext and Interfaces from Infrastructure.Data
+    builder.Services.RegisterInfrastructure(builder.Configuration);
 
-var authOptions = builder.Configuration.GetSection("Auth").Get<AuthOptions>();
+    //Conguguration setup (for JWT Auth)
+    builder.Services.Configure<AuthOptions>(builder.Configuration.GetSection("Auth"));
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    var authOptions = builder.Configuration.GetSection("Auth").Get<AuthOptions>();
+
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            ValidateIssuer = true,
-            ValidIssuer = authOptions.Issuer,
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = authOptions.Issuer,
 
-            ValidateAudience = true,
-            ValidAudience = authOptions.Audience,
+                ValidateAudience = true,
+                ValidAudience = authOptions.Audience,
 
-            ValidateLifetime = true,
+                ValidateLifetime = true,
 
-            IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
-            ValidateIssuerSigningKey = true,
-        };
-    });
-builder.Services.AddAuthorization();
+                IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
+                ValidateIssuerSigningKey = true,
+            };
+        });
+    builder.Services.AddAuthorization();
 
-builder.Services.AddCors((setup) =>
-{
-    setup.AddPolicy("default", (options) =>
+    builder.Services.AddCors((setup) =>
     {
-        options.AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-        options.WithOrigins("http://localhost:4200");
+        setup.AddPolicy("default", (options) =>
+        {
+            options.AllowAnyMethod().AllowAnyHeader();
+            options.WithOrigins("http://localhost:4200");
+        });
     });
-});
 
-var app = builder.Build();
+    //Logging
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseCors("default");
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    logger.Error(ex);
+    throw;
+}
+finally
+{
+    LogManager.Shutdown();
+}

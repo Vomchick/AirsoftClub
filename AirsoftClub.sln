@@ -7,19 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub", "AirsoftClub\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5A95B70E-8852-456E-B25A-0B8C39385795}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirsoftClub.Domain.Core", "Core\AirsoftClub.Domain.Core.csproj", "{83411774-BDBD-4166-A77C-874E57EB2E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub.Domain.Core", "Core\AirsoftClub.Domain.Core.csproj", "{83411774-BDBD-4166-A77C-874E57EB2E4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirsoftClub.Domain.Interfaces", "Interfaces\AirsoftClub.Domain.Interfaces.csproj", "{9ACB81A6-770F-428C-919B-072D06173DBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub.Domain.Interfaces", "Interfaces\AirsoftClub.Domain.Interfaces.csproj", "{9ACB81A6-770F-428C-919B-072D06173DBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{376026AC-4421-478F-94DE-C93AC3E5E6E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirsoftClub.Services.Interfaces", "AirsoftClub.Services.Interfaces\AirsoftClub.Services.Interfaces.csproj", "{D1B45A2A-3A15-4400-8CAA-EE2CD33DC954}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub.Services", "AirsoftClub.Services.Interfaces\AirsoftClub.Services.csproj", "{D1B45A2A-3A15-4400-8CAA-EE2CD33DC954}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{42D12198-318C-418B-A75F-6535257E88A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirsoftClub.Infrastructure.Data", "AirsoftClub.Infrastructure.Data\AirsoftClub.Infrastructure.Data.csproj", "{6E7769CE-23D8-4235-B8C1-05E7433FB0A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub.Infrastructure.Data", "AirsoftClub.Infrastructure.Data\AirsoftClub.Infrastructure.Data.csproj", "{6E7769CE-23D8-4235-B8C1-05E7433FB0A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirsoftClub.Infrastructure.Business", "AirsoftClub.Infrastructure.Business\AirsoftClub.Infrastructure.Business.csproj", "{87EDB04F-4CC0-4171-B810-21FC089CD36E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirsoftClub.Infrastructure.Business", "AirsoftClub.Infrastructure.Business\AirsoftClub.Infrastructure.Business.csproj", "{87EDB04F-4CC0-4171-B810-21FC089CD36E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
