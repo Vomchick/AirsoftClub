@@ -19,8 +19,8 @@ namespace AirsoftClub.Domain.Core.Models
 
         public FiringField? FiringField { get; set; }
         public Club Club { get; set; }
-        public List<SoloRecord> SoloRecords { get; set; }
-        public List<TeamRecord> TeamRecords { get; set; }
+        public List<SoloRecord>? SoloRecords { get; set; }
+        public List<TeamRecord>? TeamRecords { get; set; }
     }
 
     internal class GameMap : IEntityTypeConfiguration<Game>

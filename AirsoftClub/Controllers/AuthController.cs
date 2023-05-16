@@ -2,8 +2,10 @@
 using AirsoftClub.Domain.Core.ValidationModels;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
 using AirsoftClub.Infrastructure.Data;
+using AirsoftClub.Services;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +14,7 @@ using System.Security.Claims;
 
 namespace AirsoftClub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -60,7 +62,7 @@ namespace AirsoftClub.Controllers
                 {
                     Id = Guid.NewGuid(),
                     Name = value.UserName,
-                    Password = value.Password
+                    Password = HashPasswordHelper.HashPassword(value.Password)
                 };
                 var found = await userRepository.UsernameCheck(user.Name);
                 if (found != null)

@@ -10,9 +10,9 @@ namespace AirsoftClub.Domain.Core.Models
         public string Name { get; set; }
         public string? Description { get; set; }
 
-        public List<Player> Players { get; set; }
-        public List<TeamRecord> TeamRecords { get; set; }
-        public List<TeamInfoPost> TeamInfoPosts { get; set; }
+        public List<Player>? Players { get; set; }
+        public List<TeamRecord>? TeamRecords { get; set; }
+        public List<TeamInfoPost>? TeamInfoPosts { get; set; }
     }
 
     internal class TeamMap : IEntityTypeConfiguration<Team>

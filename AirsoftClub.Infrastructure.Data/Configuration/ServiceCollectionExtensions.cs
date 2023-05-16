@@ -1,4 +1,5 @@
-﻿using AirsoftClub.Domain.Interfaces;
+﻿using AirsoftClub.Domain.Core.Models;
+using AirsoftClub.Domain.Interfaces;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
 using AirsoftClub.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ namespace AirsoftClub.Infrastructure.Data.Configuration
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IBaseRepository<Player>, UniversalRepository<Player>>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
 
             return services;
         }

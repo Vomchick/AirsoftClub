@@ -17,7 +17,7 @@ namespace AirsoftClub.Domain.Core.Models
         public Guid ClubId { get; set; }
 
         public Club Club { get; set; }
-        public List<Game> Games { get; set; }
+        public List<Game>? Games { get; set; }
         //public List<Review> Reviews { get; set; }
     }
 

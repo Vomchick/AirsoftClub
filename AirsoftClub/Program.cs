@@ -3,6 +3,8 @@ using AirsoftClub.Infrastructure.Data.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using NLog;
 using NLog.Web;
+using System.Security.Cryptography.Xml;
+using System.Text.Json.Serialization;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
@@ -11,7 +13,7 @@ try
 
     // Add services to the container.
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -50,8 +52,8 @@ try
     {
         setup.AddPolicy("default", (options) =>
         {
-            options.AllowAnyMethod().AllowAnyHeader();
-            options.WithOrigins("http://localhost:4200");
+            options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+            //options.WithOrigins("http://localhost:4200");
         });
     });
 
@@ -72,6 +74,7 @@ try
 
     app.UseCors("default");
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using AirsoftClub.Domain.Core.Models;
+using AirsoftClub.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AirsoftClub.Infrastructure.Data.Repositories
 {
-    public class UniversalRepository<T> where T : class
+    public class UniversalRepository<T>: IBaseRepository<T> where T : class
     {
-        private readonly AirsoftClubDbContext context;
+        protected readonly AirsoftClubDbContext context;
 
         public UniversalRepository(AirsoftClubDbContext context)
         {

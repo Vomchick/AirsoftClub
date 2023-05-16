@@ -15,13 +15,13 @@ namespace AirsoftClub.Domain.Core.Models
         public Guid UserId { get; set; }
         public Guid? TeamId { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
         public Team? Team { get; set; }
-        public List<Club> Clubs { get; set; }
+        public List<Club>? Clubs { get; set; }
         //public List<Review> Reviews { get; set; }
-        public List<SoloRecord> SoloRecords { get; set; }
-        public List<PlayerInfoPost> PlayerInfoPosts { get; set; }
-        public List<ClubPlayer> ClubPlayers { get; set; }
+        public List<SoloRecord>? SoloRecords { get; set; }
+        public List<PlayerInfoPost>? PlayerInfoPosts { get; set; }
+        public List<ClubPlayer>? ClubPlayers { get; set; }
     }
 
     internal class PlayerMap : IEntityTypeConfiguration<Player>
