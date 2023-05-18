@@ -36,7 +36,7 @@ namespace AirsoftClub.Controllers
                 if (account != null)
                     return Ok(ConvertFromPlayer(account));
                 else
-                    return NotFound("Account not found");
+                    return Ok();
             }
             catch (Exception ex)
             {

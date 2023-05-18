@@ -6,5 +6,6 @@
         Sniper,
         Marksman,
         MachineGunner,
+        Other
     }
 }
