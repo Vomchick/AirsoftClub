@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace AirsoftClub.Domain.Core.ValidationModels
         public string? Desc { get; set; }
         public string? TeamName { get; set; }
         public string? TeamRole { get; set; }
+        public IFormFile? Photo { get; set; }
     }
 }

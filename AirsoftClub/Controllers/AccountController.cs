@@ -50,6 +50,11 @@ namespace AirsoftClub.Controllers
         {
             try
             {
+                //byte[] imageData;
+                //using (var binaryReader = new BinaryReader(value.Photo.OpenReadStream()))
+                //{
+                //    imageData = binaryReader.ReadBytes((int)value.Photo.Length);
+                //}
                 await rep.PostAsync(ConvertFromAccountModel(value), UserId);
                 return CreatedAtAction(nameof(GetAccount), value);
             }
@@ -60,7 +65,6 @@ namespace AirsoftClub.Controllers
             }
         }
 
-        //Update card
         [HttpPut]
         //[Route("{id:guid}")]
         public async Task<IActionResult> UpdateAccount([FromBody] AccountModel value)
@@ -77,6 +81,45 @@ namespace AirsoftClub.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("image")]
+        public async Task<IActionResult> SaveFile(IFormFile fileObj)
+        {
+            try
+            {
+                if(fileObj.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        fileObj.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        await rep.SafeFile(UserId, fileBytes);
+                    }
+                    return Ok("File saved");
+                }
+                return Ok("File was not saved");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        private byte[] ConvertFile(IFormFile file)
+        {
+            if (file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    return fileBytes;
+                }
+            }
+            return null;
+        }
+
         private Player ConvertFromAccountModel(AccountModel value)
         {
             return new Player
@@ -84,6 +127,7 @@ namespace AirsoftClub.Controllers
                 CallSign = value.CallSign,
                 GameRole = (GameRole)Enum.Parse(typeof(GameRole), value.GameRole),
                 Description = value.Desc,
+                //Photo = ConvertFile(value.Photo),
                 //TeamRole = value.TeamRole != null ? (TeamRole)Enum.Parse(typeof(TeamRole), value.TeamRole) : null,
             };
         }

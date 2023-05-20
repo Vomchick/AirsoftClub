@@ -14,6 +14,7 @@ namespace AirsoftClub.Domain.Core.Models
         public TeamRole? TeamRole { get; set; }
         public Guid UserId { get; set; }
         public Guid? TeamId { get; set; }
+        public byte[]? Photo { get; set; }
 
         public User? User { get; set; }
         public Team? Team { get; set; }

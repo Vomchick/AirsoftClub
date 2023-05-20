@@ -15,5 +15,6 @@ namespace AirsoftClub.Domain.Interfaces.RepositoryChilds
         public Task PostAsync(Player entity, Guid id);
         public Task PutAsync(Guid id, Player entity);
         public Task DeleteAsync(Guid id);
+        public Task SafeFile(Guid id, byte[] bytes);
     }
 }
