@@ -30,13 +30,19 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Team>> GetAllAsync()
         {
-            var found = await _context.Teams.ToListAsync().ConfigureAwait(false);
+            var found = await _context.Teams.Include(x => x.Players).ToListAsync().ConfigureAwait(false);
             return found;
         }
 
         public async Task<Team> GetAsync(Guid id)
         {
-            var found = await _context.Players.Include(x => x.Team).FirstOrDefaultAsync(x => x.UserId == id).ConfigureAwait(false);
+            var found = await _context.Teams.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+            return found;
+        }
+
+        public async Task<Team> GetPersonalAsync(Guid userId)
+        {
+            var found = await _context.Players.Include(x => x.Team).FirstOrDefaultAsync(x => x.UserId == userId).ConfigureAwait(false);
             return found.Team;
         }
 
@@ -46,6 +52,8 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
             if (user != null)
             {
                 var addedTeam = await _context.Teams.AddAsync(entity).ConfigureAwait(false);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+
                 user.Team = addedTeam.Entity;
                 user.TeamRole = Domain.Core.Enums.TeamRole.Commander;
             }

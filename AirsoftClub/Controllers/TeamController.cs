@@ -26,15 +26,34 @@ namespace AirsoftClub.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTeam()
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetTeam([FromRoute]Guid id)
         {
             try
             {
-                var team = await rep.GetAsync(UserId);
+                var team = await rep.GetAsync(id);
                 if (team != null)
-                    return Ok(ConvertFromTeam(team));
+                    return Ok(team);
                 else
                     return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPersonalTeam()
+        {
+            try
+            {
+                var team = await rep.GetPersonalAsync(UserId);
+                if (team != null)
+                    return Ok(team);
+                else
+                    return Ok("No personal team found");
             }
             catch (Exception ex)
             {
@@ -50,12 +69,9 @@ namespace AirsoftClub.Controllers
             try
             {
                 var team = await rep.GetAllAsync();
-                if (team != null)
+                if (team != null && team.Count() > 0)
                 {
-                    var teamModels = new List<TeamModel>();
-                    foreach (var item in team)
-                        teamModels.Add(ConvertFromTeam(item));
-                    return Ok(teamModels);
+                    return Ok(team);
                 }
                 else
                     return Ok();
@@ -73,7 +89,7 @@ namespace AirsoftClub.Controllers
             try
             {
                 await rep.PostAsync(UserId, ConvertFromTeamModel(team));
-                return CreatedAtAction(nameof(GetTeam), team);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -83,12 +99,12 @@ namespace AirsoftClub.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTeam(TeamModel team)
+        public async Task<IActionResult> UpdateTeam(Team team)
         {
             try
             {
-                await rep.PutAsync(UserId, ConvertFromTeamModel(team));
-                return CreatedAtAction(nameof(GetTeam), team);
+                await rep.PutAsync(UserId, team);
+                return Ok();
             }
             catch (Exception ex)
             {

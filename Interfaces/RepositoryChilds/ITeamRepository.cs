@@ -13,6 +13,7 @@ namespace AirsoftClub.Domain.Interfaces.RepositoryChilds
         public Task<Team> GetAsync(Guid id);
         public Task PostAsync(Guid userId, Team entity);
         public Task PutAsync(Guid id, Team entity);
-        public Task DeleteAsync(Guid id);
+        public Task DeleteAsync(Guid userId);
+        public Task<Team> GetPersonalAsync(Guid userId);
     }
 }

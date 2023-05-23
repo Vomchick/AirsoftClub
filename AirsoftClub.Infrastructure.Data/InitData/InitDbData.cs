@@ -111,27 +111,32 @@ namespace AirsoftClub.Infrastructure.Data.InitData
             builder.Entity<ClubPlayer>().HasData(new ClubPlayer
             {
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                PlayerId = new Guid("04dee4c7-4970-42e1-a410-d15b04eba3f6")
+                PlayerId = new Guid("04dee4c7-4970-42e1-a410-d15b04eba3f6"),
+                ClubRole = ClubRole.Admin
             },
             new ClubPlayer
             {
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                PlayerId = new Guid("c500a219-47ac-47ba-83df-98ab98216199")
+                PlayerId = new Guid("c500a219-47ac-47ba-83df-98ab98216199"),
+                ClubRole = ClubRole.Member
             },
             new ClubPlayer
             {
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                PlayerId = new Guid("49d02ad1-f647-463e-8239-52379c99b271")
+                PlayerId = new Guid("49d02ad1-f647-463e-8239-52379c99b271"),
+                ClubRole = ClubRole.Member
             },
             new ClubPlayer
             {
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                PlayerId = new Guid("f4e1705b-b47f-4edd-9b91-8b375f41298d")
+                PlayerId = new Guid("f4e1705b-b47f-4edd-9b91-8b375f41298d"),
+                ClubRole = ClubRole.Member
             },
             new ClubPlayer
             {
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                PlayerId = new Guid("5952c9f1-e22a-4ca8-833e-b84f701ccc60")
+                PlayerId = new Guid("5952c9f1-e22a-4ca8-833e-b84f701ccc60"),
+                ClubRole = ClubRole.Member
             });
 
             builder.Entity<FiringField>().HasData(new FiringField
