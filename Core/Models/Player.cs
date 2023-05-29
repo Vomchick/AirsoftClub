@@ -23,6 +23,7 @@ namespace AirsoftClub.Domain.Core.Models
         public List<SoloRecord>? SoloRecords { get; set; }
         public List<PlayerInfoPost>? PlayerInfoPosts { get; set; }
         public List<ClubPlayer>? ClubPlayers { get; set; }
+        public List<TeamRequest>? TeamRequests { get; set; }
     }
 
     internal class PlayerMap : IEntityTypeConfiguration<Player>

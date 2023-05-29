@@ -1,4 +1,5 @@
 ﻿using AirsoftClub.Domain.Core.Models;
+using AirsoftClub.Domain.Core.ResponseModels;
 using AirsoftClub.Domain.Core.ValidationModels;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Security.Principal;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace AirsoftClub.Controllers
 {
@@ -32,10 +34,7 @@ namespace AirsoftClub.Controllers
             try
             {
                 var team = await rep.GetAsync(id);
-                if (team != null)
-                    return Ok(team);
-                else
-                    return Ok();
+                return Ok(GenerateResponse(team, null));
             }
             catch (Exception ex)
             {
@@ -51,9 +50,83 @@ namespace AirsoftClub.Controllers
             {
                 var team = await rep.GetPersonalAsync(UserId);
                 if (team != null)
-                    return Ok(team);
+                    return Ok(GenerateResponse(team, null));
                 else
-                    return Ok("No personal team found");
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("Request/get/{teamId:guid}")]
+        public async Task<IActionResult> GetAllRequests(Guid teamId)
+        {
+            try
+            {
+                var requests = await rep.GetAllRequests(teamId);
+                if (requests != null && requests.Count() > 0)
+                {
+                    var response = new List<TeamRequestResponseModel>();
+                    foreach (var request in requests)
+                    {
+                        response.Add(GenerateRequestResponse(request));
+                    }
+                    return Ok(response);
+                }
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("Request/create")]
+        public async Task<IActionResult> CreateRequest(CreationTeamRequestModel request)
+        {
+            try
+            {
+                await rep.CreateRequest(UserId, request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("Request/pos")]
+        public async Task<IActionResult> PositiveRequest(TeamRequestModel response)
+        {
+            try
+            {
+                await rep.PositiveRequest(response);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("Request/neg")]
+        public async Task<IActionResult> NegativeRequest(TeamRequestModel response)
+        {
+            try
+            {
+                await rep.NegativeRequest(response);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -68,13 +141,34 @@ namespace AirsoftClub.Controllers
         {
             try
             {
-                var team = await rep.GetAllAsync();
-                if (team != null && team.Count() > 0)
+                var teams = await rep.GetAllAsync(UserId);
+                if (teams != null && teams.Count() > 0)
                 {
-                    return Ok(team);
+                    var response = new List<TeamResponseModel>();
+                    foreach (var team in teams)
+                    {
+                        response.Add(GenerateResponse(team.Item1, team.Item2));
+                    }
+                    return Ok(response);
                 }
                 else
-                    return Ok();
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("rights/{id:guid}")]
+        public async Task<IActionResult> GetRightsClub([FromRoute] Guid id)
+        {
+            try
+            {
+                var rights = await rep.GetRightsAsync(UserId, id);
+                return Ok(rights);
             }
             catch (Exception ex)
             {
@@ -99,11 +193,11 @@ namespace AirsoftClub.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTeam(Team team)
+        public async Task<IActionResult> UpdateTeam(TeamModel team)
         {
             try
             {
-                await rep.PutAsync(UserId, team);
+                await rep.PutAsync(UserId, ConvertFromTeamModel(team));
                 return Ok();
             }
             catch (Exception ex)
@@ -128,12 +222,25 @@ namespace AirsoftClub.Controllers
             }
         }
 
-        private TeamModel ConvertFromTeam(Team team)
+        private TeamResponseModel GenerateResponse(Team team, bool? request)
         {
-            return new TeamModel
+            return new TeamResponseModel
             {
+                Id = team.Id,
                 Name = team.Name,
                 Description = team.Description,
+                haveRequest = request
+            };
+        }
+
+        private TeamRequestResponseModel GenerateRequestResponse(TeamRequest request)
+        {
+            return new TeamRequestResponseModel
+            {
+                UserId = request.Player.UserId,
+                Name = request.Player.CallSign,
+                TeamId = request.TeamId,
+                Description = request.Description,
             };
         }
 

@@ -23,5 +23,6 @@ namespace AirsoftClub.Domain.Interfaces
         //DbSet<Review> Reviews { get; set; }
         DbSet<SoloRecord> SoloRecords { get; set; }
         DbSet<TeamRecord> TeamRecords { get; set; }
+        DbSet<TeamRequest> TeamRequests { get; set; }
     }
 }

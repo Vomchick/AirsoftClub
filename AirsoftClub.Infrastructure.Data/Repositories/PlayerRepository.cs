@@ -62,9 +62,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
             {
                 found.CallSign = entity.CallSign;
                 found.Description = entity.Description;
-                found.Team = entity.Team;
                 found.GameRole = entity.GameRole;
-                found.TeamRole = entity.TeamRole;
                 await context.SaveChangesAsync().ConfigureAwait(false);
             }
         }

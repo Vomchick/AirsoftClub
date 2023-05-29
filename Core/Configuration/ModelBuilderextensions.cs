@@ -21,6 +21,7 @@ namespace AirsoftClub.Domain.Core.Configuration
             builder.ApplyConfiguration(SoloRecordMap.Instance);
             builder.ApplyConfiguration(TeamMap.Instance);
             builder.ApplyConfiguration(TeamRecordMap.Instance);
+            builder.ApplyConfiguration(TeamRequestMap.Instance);
             return builder;
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace AirsoftClub.Controllers
 {
@@ -84,10 +85,15 @@ namespace AirsoftClub.Controllers
         {
             try
             {
-                var club = await rep.GetAllMyAsync(UserId);
-                if (club.Count() > 0)
+                var clubs = await rep.GetAllMyAsync(UserId);
+                if (clubs.Count() > 0)
                 {
-                    return Ok(club);
+                    var response = new List<ClubResponseModel>();
+                    foreach (var club in clubs)
+                    {
+                        response.Add(GenerateResponse(club, true));
+                    }
+                    return Ok(response);
                 }
                 else
                     return Ok();

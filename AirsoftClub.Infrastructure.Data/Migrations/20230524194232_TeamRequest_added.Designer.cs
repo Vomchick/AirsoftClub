@@ -4,6 +4,7 @@ using AirsoftClub.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirsoftClub.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AirsoftClubDbContext))]
-    partial class AirsoftClubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230524194232_TeamRequest_added")]
+    partial class TeamRequest_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -519,9 +522,6 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
 
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamId", "PlayerId");
 

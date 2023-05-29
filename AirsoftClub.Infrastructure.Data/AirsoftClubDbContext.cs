@@ -42,5 +42,6 @@ namespace AirsoftClub.Infrastructure.Data
         public DbSet<SoloRecord> SoloRecords { get; set; }
         public DbSet<TeamRecord> TeamRecords { get; set; }
         public DbSet<ClubPlayer> ClubPlayers { get; set; }
+        public DbSet<TeamRequest> TeamRequests { get; set; }
     }
 }
