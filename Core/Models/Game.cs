@@ -7,10 +7,11 @@ namespace AirsoftClub.Domain.Core.Models
     public class Game
     {
         public Guid Id { get; set; }
+        public string Name { get; set; }
         public string Text { get; set; }
         public string? Photo { get; set; }
         public DateTime CreationDt { get; set; }
-        public int RentalPrice { get; set; }
+        public int? RentalPrice { get; set; }
         public int DefaultPrice { get; set; }
         public DateTime StartDt { get; set; }
         public GameType GameType { get; set; }
@@ -32,9 +33,9 @@ namespace AirsoftClub.Domain.Core.Models
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Text).IsRequired();
             builder.Property(x => x.CreationDt).IsRequired();
-            builder.Property(x => x.RentalPrice).IsRequired();
             builder.Property(x => x.DefaultPrice).IsRequired();
             builder.Property(x => x.StartDt).IsRequired();
             builder.Property(x => x.GameType).IsRequired();

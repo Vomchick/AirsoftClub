@@ -2,10 +2,12 @@
 {
     public enum GameType
     {
-        PistolGame = 0,
-        SundayGame = 1,
-        OpenSeason = 2,
-        CloseSeason = 3,
-        CompetitiveGame = 4,
+        PistolGame,
+        SundayGame,
+        OpenSeason,
+        CloseSeason,
+        SpeedSoft,
+        StoryGame,
+        StalkerStrike,
     }
 }

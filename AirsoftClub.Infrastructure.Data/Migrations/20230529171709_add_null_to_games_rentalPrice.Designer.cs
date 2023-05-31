@@ -4,6 +4,7 @@ using AirsoftClub.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirsoftClub.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AirsoftClubDbContext))]
-    partial class AirsoftClubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230529171709_add_null_to_games_rentalPrice")]
+    partial class add_null_to_games_rentalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,26 +219,26 @@ namespace AirsoftClub.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("74a9c57e-42e9-43a9-afed-a4f796e20d68"),
                             ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                            CreationDt = new DateTime(2023, 4, 13, 11, 40, 0, 0, DateTimeKind.Unspecified),
+                            CreationDt = new DateTime(23, 4, 13, 11, 40, 0, 0, DateTimeKind.Unspecified),
                             DefaultPrice = 15,
                             FiringFieldId = new Guid("27ec8685-7f27-4c8a-a64a-6be33edf2715"),
                             GameType = 1,
                             Name = "Воскреска",
                             RentalPrice = 40,
-                            StartDt = new DateTime(2023, 4, 16, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDt = new DateTime(23, 4, 16, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "Площадка \"СОСНА \", Минск, Сосновая 18"
                         },
                         new
                         {
                             Id = new Guid("c9283cd5-2b80-4c63-9c78-3467b2adeb8e"),
                             ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
-                            CreationDt = new DateTime(2023, 4, 6, 16, 32, 0, 0, DateTimeKind.Unspecified),
+                            CreationDt = new DateTime(23, 4, 6, 16, 32, 0, 0, DateTimeKind.Unspecified),
                             DefaultPrice = 15,
                             FiringFieldId = new Guid("27ec8685-7f27-4c8a-a64a-6be33edf2715"),
                             GameType = 1,
                             Name = "Воскреска",
                             RentalPrice = 40,
-                            StartDt = new DateTime(2023, 4, 9, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDt = new DateTime(23, 4, 9, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "Площадка \"СОСНА \", Минск, Сосновая 18"
                         });
                 });

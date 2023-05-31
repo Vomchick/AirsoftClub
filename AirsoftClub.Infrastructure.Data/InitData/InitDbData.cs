@@ -173,11 +173,12 @@ namespace AirsoftClub.Infrastructure.Data.InitData
             builder.Entity<Game>().HasData(new Game
             {
                 Id = new Guid("74a9c57e-42e9-43a9-afed-a4f796e20d68"),
+                Name = "Воскреска",
                 Text = "Площадка \"СОСНА \", Минск, Сосновая 18",
                 RentalPrice = 40,
                 DefaultPrice = 15,
-                CreationDt = new DateTime(23, 4, 13, 11, 40, 0),
-                StartDt = new DateTime(23, 4, 16, 10, 0, 0),
+                CreationDt = new DateTime(2023, 4, 13, 11, 40, 0),
+                StartDt = new DateTime(2023, 4, 16, 10, 0, 0),
                 FiringFieldId = new Guid("27ec8685-7f27-4c8a-a64a-6be33edf2715"),
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
                 GameType = GameType.SundayGame,
@@ -185,11 +186,12 @@ namespace AirsoftClub.Infrastructure.Data.InitData
             new Game
             {
                 Id = new Guid("c9283cd5-2b80-4c63-9c78-3467b2adeb8e"),
+                Name = "Воскреска",
                 Text = "Площадка \"СОСНА \", Минск, Сосновая 18",
                 RentalPrice = 40,
                 DefaultPrice = 15,
-                CreationDt = new DateTime(23, 4, 6, 16, 32, 0),
-                StartDt = new DateTime(23, 4, 9, 10, 0, 0),
+                CreationDt = new DateTime(2023, 4, 6, 16, 32, 0),
+                StartDt = new DateTime(2023, 4, 9, 10, 0, 0),
                 FiringFieldId = new Guid("27ec8685-7f27-4c8a-a64a-6be33edf2715"),
                 ClubId = new Guid("7bd411fe-7139-4dd0-9bc2-5b9f00f98317"),
                 GameType = GameType.SundayGame,
