@@ -199,14 +199,12 @@ namespace AirsoftClub.Infrastructure.Data.InitData
 
             builder.Entity<TeamRecord>().HasData(new TeamRecord
             {
-                Id = new Guid("49850c6a-3f61-4726-8d52-9a8961be9106"),
                 TeamId = new Guid("901947ca-cd11-4119-8370-3ed82f51e40e"),
                 GameId = new Guid("74a9c57e-42e9-43a9-afed-a4f796e20d68"),
                 PeopleCount = 3,
             },
             new TeamRecord
             {
-                Id = new Guid("170c289c-4051-4dd2-8533-d5786b502e4f"),
                 TeamId = new Guid("901947ca-cd11-4119-8370-3ed82f51e40e"),
                 GameId = new Guid("c9283cd5-2b80-4c63-9c78-3467b2adeb8e"),
                 PeopleCount = 4,
@@ -214,7 +212,6 @@ namespace AirsoftClub.Infrastructure.Data.InitData
 
             builder.Entity<SoloRecord>().HasData(new SoloRecord
             {
-                Id = new Guid("a2ec19a3-6b23-4455-bbfd-1bf5abda8d5e"),
                 NeedARent = true,
                 PickUp = PickUp.PublicTransport,
                 GameId = new Guid("74a9c57e-42e9-43a9-afed-a4f796e20d68"),
@@ -222,7 +219,6 @@ namespace AirsoftClub.Infrastructure.Data.InitData
             },
             new SoloRecord
             {
-                Id = new Guid("db64e48a-3397-44d9-9aa1-f8407aa0aaf1"),
                 NeedARent = true,
                 PickUp = PickUp.NeedARide,
                 GameId = new Guid("c9283cd5-2b80-4c63-9c78-3467b2adeb8e"),

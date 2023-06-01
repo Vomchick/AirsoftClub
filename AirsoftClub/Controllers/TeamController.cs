@@ -62,6 +62,22 @@ namespace AirsoftClub.Controllers
         }
 
         [HttpGet]
+        [Route("people/{teamId:guid}")]
+        public async Task<IActionResult> GetPepleCount([FromRoute] Guid teamId)
+        {
+            try
+            {
+                var count = await rep.GetPeopleCount(teamId);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
         [Route("Request/get/{teamId:guid}")]
         public async Task<IActionResult> GetAllRequests(Guid teamId)
         {

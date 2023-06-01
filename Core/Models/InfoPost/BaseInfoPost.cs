@@ -6,8 +6,8 @@
         public string Text { get; set; }
         public string? Photo { get; set; }
         public DateTime CreationDt { get; set; }
-
         public Guid AuthorId { get; set; }
+
         public T Author { get; set; }
     }
 }

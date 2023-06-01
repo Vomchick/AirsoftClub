@@ -33,6 +33,12 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
             }
         }
 
+        public async Task<int> GetPeopleCount(Guid teamId)
+        {
+            var people = await _context.Players.Where(x => x.TeamId == teamId).CountAsync().ConfigureAwait(false);
+            return people;
+        }
+
         public async Task<IEnumerable<(Team, bool)>> GetAllAsync(Guid userId)
         {
             var teams = await _context.Teams.ToListAsync().ConfigureAwait(false);
@@ -80,7 +86,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
         public async Task PutAsync(Guid id, Team entity)
         {
             var found = await _context.Players.Include(x => x.Team).FirstOrDefaultAsync(x => x.UserId ==  id).ConfigureAwait(false);
-            if (found.Team != null && found.TeamRole == TeamRole.Commander)
+            if (found.Team != null && found.TeamRole != TeamRole.Member)
             {
                 found.Team.Name = entity.Name;
                 found.Team.Description = entity.Description;

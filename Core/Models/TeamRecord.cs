@@ -5,11 +5,10 @@ namespace AirsoftClub.Domain.Core.Models
 {
     public class TeamRecord
     {
-        public Guid Id { get; set; }
-        public int PeopleCount { get; set; }
         public Guid TeamId { get; set; }
         public Guid GameId { get; set; }
-
+        public int PeopleCount { get; set; }
+        
         public Game Game { get; set; }
         public Team Team { get; set; }
     }
@@ -20,9 +19,8 @@ namespace AirsoftClub.Domain.Core.Models
 
         public void Configure(EntityTypeBuilder<TeamRecord> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(t => new { t.TeamId, t.GameId });
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.PeopleCount).IsRequired();
         }
     }

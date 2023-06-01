@@ -6,11 +6,10 @@ namespace AirsoftClub.Domain.Core.Models
 {
     public class SoloRecord
     {
-        public Guid Id { get; set; }
-        public bool NeedARent { get; set; }
-        public PickUp PickUp { get; set; }
         public Guid GameId { get; set; }
         public Guid PlayerId { get; set; }
+        public bool NeedARent { get; set; }
+        public PickUp PickUp { get; set; }
 
         public Game Game { get; set; }
         public Player Player { get; set; }
@@ -22,9 +21,8 @@ namespace AirsoftClub.Domain.Core.Models
 
         public void Configure(EntityTypeBuilder<SoloRecord> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => new { x.PlayerId, x.GameId});
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.NeedARent).IsRequired();
             builder.Property(x => x.PickUp).IsRequired();
         }

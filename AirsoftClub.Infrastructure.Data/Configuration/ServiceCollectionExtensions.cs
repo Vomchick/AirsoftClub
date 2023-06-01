@@ -25,6 +25,8 @@ namespace AirsoftClub.Infrastructure.Data.Configuration
             services.AddScoped<IClubRepository, ClubRepository>();
             services.AddScoped<IFieldRepository, FieldRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<ITeamRecordRepository, TeamRecordRepository>();
+            services.AddScoped<ISoloRecordRepository, SoloRecordRepository>();
 
             return services;
         }
