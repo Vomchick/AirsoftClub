@@ -10,8 +10,7 @@ namespace AirsoftClub.Domain.Core.ValidationModels
 {
     public class AllInfoPosts
     {
-        [Required]
-        public Guid AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
         [Required]
         public AuthorType AuthorType { get; set; }
     }

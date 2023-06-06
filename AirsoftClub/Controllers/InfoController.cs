@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace AirsoftClub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class InfoController : ControllerBase
@@ -22,6 +22,25 @@ namespace AirsoftClub.Controllers
         {
             this.logger = logger;
             this.rep = rep;
+        }
+
+        [HttpGet]
+        [Route("news")]
+        public async Task<IActionResult> GetNews()
+        {
+            try
+            {
+                var posts = await rep.GetNewsAsync();
+                if (posts != null && posts.Count() > 0)
+                    return Ok(posts);
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
@@ -77,8 +96,8 @@ namespace AirsoftClub.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("{postId:guid}")]
+        [HttpPost]
+        [Route("delete/{postId:guid}")]
         public async Task<IActionResult> DeleteTeamRecord([FromBody] InfoPostModel infoPost, [FromRoute] Guid postId)
         {
             try

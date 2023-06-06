@@ -23,6 +23,16 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
             _context = context;
         }
 
+        public async Task LeaveTeam(Guid userId)
+        {
+            var found = await _context.Players.FirstOrDefaultAsync(x => x.UserId == userId).ConfigureAwait(false);
+            if (found != null && found.TeamId != null)
+            {
+                found.TeamId = null;
+                found.TeamRole = null;
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+        }
         public async Task DeleteAsync(Guid id)
         {
             var found = await _context.Players.Include(x => x.Team).FirstOrDefaultAsync(x => x.UserId == id).ConfigureAwait(false);
@@ -66,7 +76,9 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
         public async Task<Team> GetPersonalAsync(Guid userId)
         {
             var found = await _context.Players.Include(x => x.Team).FirstOrDefaultAsync(x => x.UserId == userId).ConfigureAwait(false);
-            return found.Team;
+            if (found != null && found.Team != null)
+                return found.Team;
+            else return null;
         }
 
         public async Task PostAsync(Guid userId, Team entity)

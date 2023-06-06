@@ -63,6 +63,52 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                     }
             }
         }
+        public async Task<IEnumerable<InfoPostResponseModel>> GetNewsAsync()
+        {
+            var playerPosts = await context.PlayerInfoPosts.Include(x => x.Author).ToListAsync().ConfigureAwait(false);
+            var teamPosts = await context.TeamInfoPosts.Include(x => x.Author).ToListAsync().ConfigureAwait(false);
+            var clubPosts = await context.ClubInfoPosts.Include(x => x.Author).ToListAsync().ConfigureAwait(false);
+
+            var allPosts = new List<InfoPostResponseModel>();
+            foreach (var post in playerPosts)
+            {
+                allPosts.Add(new InfoPostResponseModel
+                {
+                    Id = post.Id,
+                    AuthorId = post.AuthorId,
+                    Text = post.Text,
+                    CreationDt = post.CreationDt,
+                    AuthorName = post.Author.CallSign,
+                    AuthorType = AuthorType.Player
+                });
+            }
+            foreach (var post in teamPosts)
+            {
+                allPosts.Add(new InfoPostResponseModel
+                {
+                    Id = post.Id,
+                    AuthorId = post.AuthorId,
+                    Text = post.Text,
+                    CreationDt = post.CreationDt,
+                    AuthorName = post.Author.Name,
+                    AuthorType = AuthorType.Team
+                });
+            }
+            foreach (var post in clubPosts)
+            {
+                allPosts.Add(new InfoPostResponseModel
+                {
+                    Id = post.Id,
+                    AuthorId = post.AuthorId,
+                    Text = post.Text,
+                    CreationDt = post.CreationDt,
+                    AuthorName = post.Author.Name,
+                    AuthorType = AuthorType.Club
+                });
+            }
+            allPosts.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
+            return allPosts;
+        }
 
         public async Task<IEnumerable<InfoPostResponseModel>> GetAllAsync(AllInfoPosts info)
         {
@@ -70,7 +116,8 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
             {
                 case AuthorType.Player:
                     {
-                        var posts = await context.PlayerInfoPosts.Where(x => x.AuthorId == info.AuthorId).ToListAsync().ConfigureAwait(false);
+                        var player = await context.Players.FirstOrDefaultAsync(x => x.UserId == info.AuthorId).ConfigureAwait(false);
+                        var posts = await context.PlayerInfoPosts.Where(x => x.AuthorId == player.Id).ToListAsync().ConfigureAwait(false);
                         if (posts != null)
                         {
                             var retPosts = new List<InfoPostResponseModel>();
@@ -81,6 +128,9 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     Id = post.Id,
                                     AuthorId = post.AuthorId,
                                     Text = post.Text,
+                                    CreationDt = post.CreationDt,
+                                    AuthorName = player.CallSign,
+                                    AuthorType = AuthorType.Player
                                 });
                             }
                             return retPosts;
@@ -89,7 +139,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                     }
                 case AuthorType.Team:
                     {
-                        var posts = await context.TeamInfoPosts.Where(x => x.AuthorId == info.AuthorId).ToListAsync().ConfigureAwait(false);
+                        var posts = await context.TeamInfoPosts.Where(x => x.AuthorId == info.AuthorId).Include(x => x.Author).ToListAsync().ConfigureAwait(false);
                         if (posts != null)
                         {
                             var retPosts = new List<InfoPostResponseModel>();
@@ -100,6 +150,9 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     Id = post.Id,
                                     AuthorId = post.AuthorId,
                                     Text = post.Text,
+                                    CreationDt = post.CreationDt,
+                                    AuthorName = post.Author.Name,
+                                    AuthorType = AuthorType.Team
                                 });
                             }
                             return retPosts;
@@ -109,7 +162,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
 
                 case AuthorType.Club:
                     {
-                        var posts = await context.ClubInfoPosts.Where(x => x.AuthorId == info.AuthorId).ToListAsync().ConfigureAwait(false);
+                        var posts = await context.ClubInfoPosts.Where(x => x.AuthorId == info.AuthorId).Include(x => x.Author).ToListAsync().ConfigureAwait(false);
                         if (posts != null)
                         {
                             var retPosts = new List<InfoPostResponseModel>();
@@ -120,6 +173,9 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     Id = post.Id,
                                     AuthorId = post.AuthorId,
                                     Text = post.Text,
+                                    CreationDt = post.CreationDt,
+                                    AuthorName = post.Author.Name,
+                                    AuthorType = AuthorType.Club
                                 });
                             }
                             return retPosts;
@@ -147,7 +203,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                     }
                 case AuthorType.Team:
                     {
-                        var post = new TeamInfoPost { AuthorId = infoPost.AuthorId, CreationDt = DateTime.Now, Text = infoPost.Text };
+                        var post = new TeamInfoPost { AuthorId = (Guid)infoPost.AuthorId, CreationDt = DateTime.Now, Text = infoPost.Text };
                         await context.TeamInfoPosts.AddAsync(post);
                         await context.SaveChangesAsync().ConfigureAwait(false);
                         break;
@@ -155,7 +211,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
 
                 case AuthorType.Club:
                     {
-                        var post = new ClubInfoPost { AuthorId = infoPost.AuthorId, CreationDt = DateTime.Now, Text = infoPost.Text };
+                        var post = new ClubInfoPost { AuthorId = (Guid)infoPost.AuthorId, CreationDt = DateTime.Now, Text = infoPost.Text };
                         await context.ClubInfoPosts.AddAsync(post);
                         await context.SaveChangesAsync().ConfigureAwait(false);
                         break;

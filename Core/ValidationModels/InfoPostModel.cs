@@ -12,7 +12,7 @@ namespace AirsoftClub.Domain.Core.ValidationModels
     {
         [Required]
         public string Text { get; set; }
-        public Guid AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
         [Required]
         public AuthorType AuthorType { get; set; }
     }

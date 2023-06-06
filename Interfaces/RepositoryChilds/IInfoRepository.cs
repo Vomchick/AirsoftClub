@@ -15,5 +15,6 @@ namespace AirsoftClub.Domain.Interfaces.RepositoryChilds
         public Task PostAsync(InfoPostModel infoPost);
         public Task PutAsync(InfoPostModel infoPost, Guid postId);
         public Task<IEnumerable<InfoPostResponseModel>> GetAllAsync(AllInfoPosts info);
+        public Task<IEnumerable<InfoPostResponseModel>> GetNewsAsync();
     }
 }

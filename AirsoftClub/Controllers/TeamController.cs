@@ -103,6 +103,22 @@ namespace AirsoftClub.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("leave")]
+        public async Task<IActionResult> LeaveTeam()
+        {
+            try
+            {
+                await rep.LeaveTeam(UserId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost]
         [Route("Request/create")]
         public async Task<IActionResult> CreateRequest(CreationTeamRequestModel request)
@@ -179,7 +195,7 @@ namespace AirsoftClub.Controllers
 
         [HttpGet]
         [Route("rights/{id:guid}")]
-        public async Task<IActionResult> GetRightsClub([FromRoute] Guid id)
+        public async Task<IActionResult> GetRightsTeam([FromRoute] Guid id)
         {
             try
             {

@@ -23,5 +23,6 @@ namespace AirsoftClub.Domain.Interfaces.RepositoryChilds
         public Task NegativeRequest(TeamRequestModel response);
         public Task<IEnumerable<TeamRequest>> GetAllRequests(Guid teamId);
         public Task<int> GetPeopleCount(Guid teamId);
+        public Task LeaveTeam(Guid userId);
     }
 }
