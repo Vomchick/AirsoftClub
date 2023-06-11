@@ -1,4 +1,5 @@
 ﻿using AirsoftClub.Domain.Core.Models;
+using AirsoftClub.Domain.Core.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace AirsoftClub.Domain.Interfaces.RepositoryChilds
         public Task<Game> GetAsync(Guid id);
         public Task PostAsync(Game entity, Guid clubId, Guid userId);
         public Task PutAsync(Guid gameId, Game entity, Guid userId);
+        public Task<StatisticResponseModel> GetStatistic(Guid gameId);
     }
 }

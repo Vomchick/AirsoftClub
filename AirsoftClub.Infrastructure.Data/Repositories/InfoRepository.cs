@@ -133,6 +133,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     AuthorType = AuthorType.Player
                                 });
                             }
+                            retPosts.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
                             return retPosts;
                         }
                         return null;
@@ -155,6 +156,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     AuthorType = AuthorType.Team
                                 });
                             }
+                            retPosts.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
                             return retPosts;
                         }
                         return null;
@@ -178,6 +180,7 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
                                     AuthorType = AuthorType.Club
                                 });
                             }
+                            retPosts.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
                             return retPosts;
                         }
                         return null;

@@ -19,5 +19,6 @@ namespace AirsoftClub.Domain.Core.ResponseModels
         public DateTime StartDt { get; set; }
         public GameType GameType { get; set; }
         public Guid? FieldId { get; set; }
+        public string? FieldName { get; set; }
     }
 }

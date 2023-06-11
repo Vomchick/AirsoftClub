@@ -1,6 +1,7 @@
 ﻿using AirsoftClub.Domain.Core.Enums;
 using AirsoftClub.Domain.Core.ValidationModels;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,10 @@ namespace AirsoftClub.Controllers
                 if (info.AuthorType == AuthorType.Player) info.AuthorId = UserId;
                 var posts = await rep.GetAllAsync(info);
                 if (posts != null && posts.Count() > 0)
+                {
+                    
                     return Ok(posts);
+                }
                 else
                     return NoContent();
             }

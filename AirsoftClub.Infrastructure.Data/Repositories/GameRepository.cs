@@ -1,5 +1,6 @@
 ﻿using AirsoftClub.Domain.Core.Enums;
 using AirsoftClub.Domain.Core.Models;
+using AirsoftClub.Domain.Core.ResponseModels;
 using AirsoftClub.Domain.Interfaces.RepositoryChilds;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,14 +32,51 @@ namespace AirsoftClub.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Game>> GetAllAsync(Guid clubId)
         {
-            var found = await context.Games.Where(x => x.ClubId == clubId).ToListAsync().ConfigureAwait(false);
+            var found = await context.Games.Include(x => x.FiringField).Where(x => x.ClubId == clubId).ToListAsync().ConfigureAwait(false);
             return found;
         }
 
         public async Task<Game> GetAsync(Guid id)
         {
-            var found = await context.Games.FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+            var found = await context.Games.Include(x => x.FiringField).FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
             return found;
+        }
+
+        public async Task<StatisticResponseModel> GetStatistic(Guid gameId)
+        {
+            var gameInfo = await context.Games.Include(x => x.SoloRecords).Include(x => x.TeamRecords)
+                .FirstOrDefaultAsync(x => x.Id == gameId).ConfigureAwait(false);
+            if(gameInfo != null)
+            {
+                var teamPeopleCount = 0;
+                if (gameInfo.TeamRecords != null)
+                {
+                    foreach(var teamRecord in gameInfo.TeamRecords)
+                    {
+                        teamPeopleCount += teamRecord.PeopleCount;
+                    }
+                }
+                var rentCount = 0;
+                var pickUpCount = 0;
+                if (gameInfo.SoloRecords != null)
+                {
+                    foreach (var soloRecord in gameInfo.SoloRecords)
+                    {
+                        if (soloRecord.NeedARent) rentCount++;
+                        if (soloRecord.PickUp == PickUp.NeedARide) pickUpCount++;
+                    }
+                }
+                return new StatisticResponseModel
+                {
+                    SoloPeopleCount = gameInfo.SoloRecords != null ? gameInfo.SoloRecords.Count() : 0,
+                    TeamsCount = gameInfo.TeamRecords != null ? gameInfo.TeamRecords.Count() : 0,
+                    TeamsPeopleCount = teamPeopleCount,
+                    RentCount = rentCount,
+                    PickUpCount = pickUpCount,
+                    TotalPeopleCount = (gameInfo.SoloRecords != null ? gameInfo.SoloRecords.Count() : 0) + teamPeopleCount,
+                };
+            }
+            return null;
         }
 
         public async Task PostAsync(Game entity, Guid clubId, Guid userId)

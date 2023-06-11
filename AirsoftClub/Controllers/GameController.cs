@@ -27,6 +27,22 @@ namespace AirsoftClub.Controllers
         }
 
         [HttpGet]
+        [Route("statistic/{gameId:guid}")]
+        public async Task<IActionResult> GetStatistic([FromRoute] Guid gameId)
+        {
+            try
+            {
+                var statistic = await rep.GetStatistic(gameId);
+                return Ok(statistic);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
         [Route("{id:guid}")]
         public async Task<IActionResult> GetGame([FromRoute] Guid id)
         {
@@ -56,6 +72,7 @@ namespace AirsoftClub.Controllers
                     {
                         response.Add(GenerateResponse(game));
                     }
+                    response.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
                     return Ok(response);
                 }
                 else
@@ -129,6 +146,7 @@ namespace AirsoftClub.Controllers
                 StartDt = game.StartDt,
                 GameType = game.GameType,
                 FieldId = game.FiringFieldId,
+                FieldName = game.FiringField?.Name,
             };
         }
 
@@ -142,6 +160,7 @@ namespace AirsoftClub.Controllers
                 DefaultPrice = game.DefaultPrice,
                 StartDt = game.StartDt.AddHours(3),
                 GameType = game.GameType,
+                FiringFieldId = game.FieldId
             };
         }
     }

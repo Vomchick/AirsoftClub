@@ -5,6 +5,7 @@ using AirsoftClub.Domain.Interfaces.RepositoryChilds;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 
 namespace AirsoftClub.Controllers
@@ -55,6 +56,7 @@ namespace AirsoftClub.Controllers
                     {
                         response.Add(GenerateResponse(field));
                     }
+                    response.Sort((x, y) => DateTime.Compare(y.CreationDt, x.CreationDt));
                     return Ok(response);
                 }
                 else

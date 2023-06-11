@@ -14,6 +14,8 @@ namespace AirsoftClub.Domain.Core.ValidationModels
         [MaxLength(128)]
         public string Name { get; set; }
         [Required]
+        public Guid FieldId { get; set; }
+        [Required]
         [MaxLength(2000)]
         public string Text { get; set; }
         //public string? Photo { get; set; }
