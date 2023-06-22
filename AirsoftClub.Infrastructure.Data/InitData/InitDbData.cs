@@ -19,31 +19,31 @@ namespace AirsoftClub.Infrastructure.Data.InitData
             {
                 Id = new Guid("e4001e95-3efb-4e74-add8-9b70ec190b5a"),
                 Name = "User1",
-                Password = HashPasswordHelper.HashPassword("11111111"),
+                Password = HashPasswordHelper.HashPassword("1111111q"),
             },
             new User
             {
                 Id = new Guid("6f8e30bc-5cbd-4116-9587-e1620df6647f"),
                 Name = "User2",
-                Password = HashPasswordHelper.HashPassword("11111111"),
+                Password = HashPasswordHelper.HashPassword("1111111q"),
             },
             new User
             {
                 Id = new Guid("a16ca84c-196a-412d-b2f7-99eadcd5ef54"),
                 Name = "User3",
-                Password = HashPasswordHelper.HashPassword("11111111"),
+                Password = HashPasswordHelper.HashPassword("1111111q"),
             },
             new User
             {
                 Id = new Guid("c10b956d-2cf4-4f55-8773-695e94fdcb07"),
                 Name = "User4",
-                Password = HashPasswordHelper.HashPassword("11111111"),
+                Password = HashPasswordHelper.HashPassword("1111111q"),
             },
             new User
             {
                 Id = new Guid("960cb14e-d653-46ed-96ba-c75cd8703f4a"),
                 Name = "User5",
-                Password = HashPasswordHelper.HashPassword("11111111"),
+                Password = HashPasswordHelper.HashPassword("1111111q"),
             });
 
             builder.Entity<Team>().HasData(new Team
